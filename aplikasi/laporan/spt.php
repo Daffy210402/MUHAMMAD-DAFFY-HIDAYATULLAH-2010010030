@@ -1,6 +1,6 @@
 
 <?php
-$title 	= " Laporan SPT";
+$title 	= " Laporan Surat Perintah Tugas";
 
 include '../modul/pdf/head.php';
 $html .= "
@@ -8,11 +8,18 @@ $html .= "
 <thead>
 <tr>	
 <th>No</th>
-    <th>Tanggal</th>
+<th>NIP</th>
+<th>Pegawai</th>
 
-    <th>Karyawan</th>
+<th>Tanggal Perintah</th>
 
-    <th>Bukti SPT</th>
+<th>Tujuan</th>
+
+<th>Dari Tanggal</th>
+
+<th>Sampai Tanggal</th>
+
+<th>Keterangan</th>
 
 </tr>
 </thead>
@@ -20,23 +27,22 @@ $html .= "
 ";
 $no = 1;
 $sql = mysqli_query($koneksi,"SELECT * FROM spt
-
-JOIN user USING(id_user)
-WHERE tanggal_spt BETWEEN '$dari' AND '$sampai'
-
-");
+	JOIN user USING(id_user)
+	WHERE tanggal_perintah BETWEEN '$dari' AND '$sampai'
+	");
 while ($data = mysqli_fetch_array($sql)) {
-$id = $data['id_spt'];
+	$id = $data['id_spt'];
 	$html .="<tr>
 	<td align='center'>".$no++."</td>
-
-<td align='center'>".tgl($data['tanggal_spt'])."</td>
-
-<td align='center'>".$data['nama_user']."</td>
-
-<td align='center'>".$data['bukti_spt']."</td>
-
-";
+	<td align='center'>".$data['nip']."</td>
+	<td align='center'>".$data['nama_pengguna']."</td>
+	<td align='center'>".tgl($data['tanggal_perintah'])."</td>
+	<td align='center'>".$data['tujuan_perintah']."</td>
+	<td align='center'>".tgl($data['dari_tanggal'])."</td>
+	<td align='center'>".tgl($data['sampai_tanggal'])."</td>
+	<td align='center'>".$data['keterangan_perintah']."</td>
+	</tr>
+	";
 } 
 $html .="</tbody>
 </table>";

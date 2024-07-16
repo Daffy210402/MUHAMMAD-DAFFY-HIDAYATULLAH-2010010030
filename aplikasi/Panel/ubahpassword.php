@@ -3,13 +3,35 @@ $judul = "Ubah Password";
 include '../conf/kepala.php';
 
 ?>
-<div class="row">
-    <!-- [ Select2 ] start -->
-    <div class="col-sm-12">
-        <div class="card select-card">
-            <div class="card-body">
-                    <form method="POST" action="beranda/ubahpassword.php" enctype="multipart/form-data">
-                    <div class="row">
+<!-- BEGIN: Page Main-->
+<!-- BEGIN: Page Main-->
+<div class="main-content app-content mt-0">
+    <div class="side-app">
+
+        <!-- CONTAINER -->
+        <div class="main-container container-fluid">
+
+            <!-- PAGE-HEADER -->
+            <div class="page-header">
+                <h1 class="page-title"></h1>
+                <div>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.php">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page"><a href="index.php?page=<?=$folder;?>"><?=$judul;?></a></li>
+                    </ol>
+                </div>
+
+            </div>
+            <!-- PAGE-HEADER END -->
+
+            <!-- Row -->
+            <div class="row">
+                <div class="col-xl-12 col-md-12">
+                    <form method="POST" action="beranda/ubahpassword.php" enctype="multipart/form-data"class="card">
+                        <div class="card-header">
+                            <h3 class="card-title"><?=$judul;?></h3>
+                        </div>
+                        <div class=" card-body">
                             <div class="col-lg-12">
                                 <div class="form-group">
                                     <label class="form-label">Password Lama</label>
@@ -34,14 +56,20 @@ include '../conf/kepala.php';
                                     <button type="reset" class="btn btn-danger">Reset</button>
                                 </div>
                             </div>    
-                </form>
-                   </div>
+
+                        </div>
+                    </form>
+                </div>    
             </div>
         </div>
+        <!-- End Row-->
     </div>
-    <!-- [ Select2 ] end -->
+    <!-- CONTAINER CLOSED -->
+
 </div>
-<!-- [ Main Content ] end -->     
+</div>
+<!--app-content closed-->
+</div>         
 
 <?php 
 include '../conf/kaki.php';

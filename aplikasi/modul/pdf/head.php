@@ -4,8 +4,8 @@ require_once '../modul/pdf/pdf/autoload.inc.php';
 include '../conf/koneksi.php';
 use Dompdf\Dompdf;
 $dompdf = new Dompdf();
-$dari   = date("Y-m-d", strtotime($_POST['dari']));
-$sampai = date("Y-m-d", strtotime($_POST['sampai']));
+$dari = date('Y-m-d', strtotime($_POST['dari']));
+$sampai = date('Y-m-d', strtotime($_POST['sampai']));
 $html = "
 <style>
 
@@ -55,35 +55,25 @@ $html = "
   <center>
   <table class='kop' style='width:100%;'>
     <tr>
-      <td rowspan='5' align='center'><img src='../images/Setting/".$setting['logo_kantor']."' height='80px'>
+      <td rowspan='5' align='center'><img src='../modul/internal/logo.png' height='80px'>
       </td>
       <td style='font-size: 20px; font-weight: bold;' align='center'>&nbsp;</td>
      <td rowspan='5' align='center'><img src='../modul/internal/1.png' height='80px'>
       </td>
     </tr>
     <tr>
-      <td style='font-size: 25px;'>PEMERINTAH KABUPATEN TAPIN</td>
+      <td style='font-size: 25px; font-weight: bold;'>".$apk."</td>
       <td style='font-size: 25px; font-weight: bold;'></td>
     </tr>
     <tr>
-      <td style='font-size: 34px; font-weight: bold;'>SEKERTARIAT DAERAH</td>
-      <td style='font-size: 20px; font-weight: bold;'></td>
-    </tr>
-    <tr>
-      <td style='font-size: 12px;'>".$lokasi."</td>
+      <td style='font-size: 15px;'>".$lokasi."</td>
     </tr>
   </table>
   </center>
 <hr/>
   <table class='kop' style='width:100%;'>
-  <tr>
-  <td style='font-size: 20px; font-weight: bold;'>".$title."</td>
-</tr>
-</table>
-<hr/>
-  <table class='kop' style='width:100%;'>
     <tr>
-      <td style='font-size: 16px;'>Periode : ".tgl($dari)." s/d ".tgl($sampai)."</td>
+      <td style='font-size: 20px; font-weight: bold;'>".$title."</td>
     </tr>
   </table>
 <hr/>

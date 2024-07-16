@@ -16,7 +16,7 @@ $html .="
                                     </tr>
                                     <tr>
                                         <th width='60%'>&nbsp;</th>
-                                        <th align='center'>Banjarbaru, ".tgl(date('Y-m-d'))."</th>
+                                        <th align='center'>Barabai, ".tgl(date('Y-m-d'))."</th>
                                     </tr>
                                     <tr>
                                         <th width='60%'>&nbsp;</th>
@@ -28,28 +28,23 @@ $html .="
                                     </tr>
                                     <tr>
                                         <th width='60%'>&nbsp;</th>
-                                        <th align='center'><img src='../images/Setting/".$setting['background_login']."' height='80px'></th>
+                                        <th align='center'><img src='../modul/internal/barcode.jpg' height='80px'></th>
                                     </tr>
                                     <tr>
                                         <th width='60%'>&nbsp;</th>
-                                        <th align='center'><b>".$setting['nama_ketua']."</b></th>
-                                    </tr>";
-if ($setting['nip_ketua'] == NULL) {
-    
-} else {
-$html .= "<tr>
-    <th width='60%'>&nbsp;</th>
-    <th align='center'><b>".$setting['nip_ketua']."</b></th>
-</tr>";
-}
-
-$html .= "</table>  
+                                        <th align='center'><b>Dra. Hj. Noor Asiah</b></th>
+                                    </tr>
+                                    <tr>
+                                        <th width='60%'>&nbsp;</th>
+                                        <th align='center'><b>NIP. 19700820 199703 2 002</b></th>
+                                    </tr>
+                                </table>  
 </div>
 </div>";
 
 $dompdf->loadhtml($html);
 
-$dompdf->setPaper('A4', 'potret');
+$dompdf->setPaper('A4', 'landscape');
 $dompdf->render();
 $dompdf->stream($title, array("Attachment" => 0));
  ?>

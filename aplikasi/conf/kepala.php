@@ -1,121 +1,124 @@
 <?php 
 include '../conf/koneksi.php';
-$level          = $_SESSION['level'];
-$id_user        = $_SESSION['id_user'];
-$nama_user      = $_SESSION['nama_user'];
-    include 'beranda/coding.php';
+$akses          = $_SESSION['akses'];
+$id_pengguna    = $_SESSION['id_user'];
+$nama_pengguna  = $_SESSION['nama_pengguna'];
+$foto           = $_SESSION['foto'];
 ?>
-<!DOCTYPE html>
-<html lang="en">
 <head>
-    <title><?=$apk;?></title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="description" content="" />
-    <meta name="keywords" content="">
-    <meta name="author" content="Phoenixcoded" />
-    <!-- Favicon icon -->
-    <link rel="icon" href="../images/Setting/<?=$setting['logo_kantor'];?>" type="image/x-icon">
-    <!-- select2 css -->
-    <link rel="stylesheet" href="../assets/css/plugins/select2.min.css">
-    <!-- data tables css -->
-    <link rel="stylesheet" href="../assets/css/plugins/dataTables.bootstrap4.min.css">
-    <!-- fileupload-custom css -->
-    <link rel="stylesheet" href="../assets/css/plugins/dropzone.min.css">    
-    <!-- vendor css -->
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <!-- Maps -->
-    <link rel="stylesheet" href="../modul/peta/leaflet.css" />
-    <script src="../modul/peta/leaflet.js"></script>
 
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <!-- META DATA -->
+    <meta charset="UTF-8">
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=0'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
+    <!-- FAVICON -->
+    <link rel="shortcut icon" type="image/x-icon" href="../modul/internal/logo.png" />
+
+    <!-- TITLE -->
+    <title><?=$judul;?></title>
+    <style type="text/css">
+        a.disabled {
+          pointer-events: none;
+          cursor: default;
+      }
+  </style>
+  <!-- BOOTSTRAP CSS -->
+  <link id="style" href="../assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+
+  <!-- STYLE CSS -->
+  <link href="../assets/css/style.css" rel="stylesheet" />
+  <link href="../assets/css/dark-style.css" rel="stylesheet" />
+  <link href="../assets/css/transparent-style.css" rel="stylesheet">
+  <link href="../assets/css/skin-modes.css" rel="stylesheet" />
+
+  <!--- FONT-ICONS CSS -->
+  <link href="../assets/css/icons.css" rel="stylesheet" />
+
+  <!-- COLOR SKIN CSS -->
+  <link id="theme" rel="stylesheet" type="text/css" media="all" href="../assets/colors/color1.css" />
+
+  <style>
+    .hide{
+      display:none!important
+  }
+</style>
 </head>
-<body class="background-img-2">
-    <!-- [ Pre-loader ] start -->
-    <div class="loader-bg">
-        <div class="loader-track">
-            <div class="loader-fill"></div>
-        </div>
+<!-- END: Head-->
+
+
+<body class="app sidebar-mini ltr transparent-mode bg-img1">
+
+    <!-- GLOBAL-LOADER -->
+    <div id="global-loader">
+        <img src="../assets/images/loader.svg" class="loader-img" alt="Loader">
     </div>
-    <!-- [ Pre-loader ] End -->
+    <!-- /GLOBAL-LOADER -->
+
+    <!-- PAGE -->
+    <div class="page">
+        <div class="page-main">
+
+            <!-- app-Header -->
+            <div class="app-header header sticky">
+                <div class="container-fluid main-container">
+                    <div class="d-flex">
+                        <!-- sidebar-toggle-->
+                        <a class="logo-horizontal " href="index.php">
+                            <img src="../modul/internal/logo.png" class="header-brand-img desktop-logo" alt="logo">
+                            <img src="../modul/internal/logo.png" class="header-brand-img light-logo1"
+                            alt="logo">
+                        </a>
+                        <!-- LOGO -->
+                        <div class="d-flex order-lg-2 ms-auto header-right-icons">
+                            <div class="navbar navbar-collapse responsive-navbar p-0">
+                                <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
+                                    <div class="d-flex order-lg-2">
+                                        <!-- FULL-SCREEN -->
+                                        <div class="dropdown d-flex">
+                                            <a class="nav-link icon full-screen-link nav-link-bg">
+                                                <i class="fe fe-minimize fullscreen-button"></i>
+                                            </a>
+                                        </div>
+                                        <!-- SIDE-MENU -->
+                                        <div class="dropdown d-flex profile-1">
+                                            <a href="javascript:void(0)" data-bs-toggle="dropdown" class="nav-link leading-none d-flex">
+                                                <img src="../images/Pegawai/<?=$foto;?>" alt="profile-user"
+                                                class="avatar profile-user brround cover-image">
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                <div class="drop-heading">
+                                                    <div class="text-center">
+                                                        <h5 class="text-dark mb-0 fs-14 fw-semibold"><?=$nama_pengguna;?></h5>
+                                                        <small class="text-muted"><?=$akses;?></small>
+                                                    </div>
+                                                </div>
+                                                <a class="dropdown-item" href="../panel/ubahpassword.php">
+                                                    <i class="dropdown-icon fe fe-lock"></i> Ubah Password
+                                                </a>
+                                                <a class="dropdown-item" href="index.php?page=Profile">
+                                                    <i class="dropdown-icon fe fe-user"></i> Profile
+                                                </a>
+                                                <a class="dropdown-item" href="../conf/keluar.php">
+                                                    <i class="dropdown-icon fe fe-power"></i> Keluar
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /app-Header -->
 
             <?php 
-            if ($level == "Administrator") {
+            if ($akses == "Administrator") {
                 include '../conf/Navigation/Administrator.php';
-            }else if ($level == "Karyawan") {
-                include '../conf/Navigation/Karyawan.php';
-            }else if ($level == "Ketua") {
-                include '../conf/Navigation/Ketua.php';
+            }else if ($akses == "Pegawai") {
+                include '../conf/Navigation/Pegawai.php';
             }else{
                 echo "<script>alert('Anda tidak memiliki Akses!');window.location='../index.php';</script>";
             }
             ?>
-
-    <header class="navbar pcoded-header navbar-expand-lg navbar-light header-blue">
-        
-            
-                <div class="m-header">
-                    <a class="mobile-menu" id="mobile-collapse" href="#!"><span></span></a>
-                    <a href="#!" class="b-brand">
-                        <!-- ========   change your logo hear   ============ -->
-                        <h3 style="font-family: 'Nunito', 'Segoe UI', arial; color: white; letter-spacing: 1.5px; font-weight: 600; font-size: 20px; text-transform: uppercase; text-decoration: none;"><center>SIMPEG</center></h3>
-                        
-                    </a>
-                    <a href="#!" class="mob-toggler">
-                        <i class="feather icon-more-vertical"></i>
-                    </a>
-                </div>
-                <div class="collapse navbar-collapse">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item">
-                          
-                        </li>
-                    </ul>
-                    <ul class="navbar-nav ml-auto">
-                        <li>
-                            <div class="dropdown drp-user">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <i class="feather icon-user"></i>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right profile-notification">
-                                    <div class="pro-head">
-                                        <img src="../modul/internal/user.png" class="img-radius" alt="User-Profile-Image">
-                                        <span><?=$nama_user;?></span>
-                                        <a href="../conf/keluar.php" class="dud-logout" title="Logout">
-                                            <i class="feather icon-log-out"></i>
-                                        </a>
-                                    </div>
-                                    <ul class="pro-body">
-                                        <li><a href="ubahpassword.php" class="dropdown-item"><i class="feather icon-user"></i> Profile</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-    </header>
-    <!-- [ Header ] end -->
-<!-- [ Main Content ] start -->
-<div class="pcoded-main-container">
-    <div class="pcoded-content">
-        <!-- [ breadcrumb ] start -->
-        <div class="page-header">
-            <div class="page-block">
-                <div class="row align-items-center">
-                    <div class="col-md-12">
-                        <div class="page-header-title">
-                            <h5 class="m-b-10"><?=$judul;?></h5>
-                        </div>
-                        <ul class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="index.php"><i class="feather icon-home"></i></a></li>
-                            <li class="breadcrumb-item"><a href="index.php?page=<?=$folder;?>"><?=$judul;?></a></li>
-                            <?php if (isset($_GET['form'])): ?>
-                                <li class="breadcrumb-item"><a href="#!"><?=$_GET['form'];?></a></li>
-                            <?php endif ?>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>

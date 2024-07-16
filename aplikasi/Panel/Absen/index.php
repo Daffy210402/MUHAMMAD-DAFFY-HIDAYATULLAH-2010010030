@@ -16,43 +16,40 @@ max-width: 200px;
 }
 </style> 
  <!-- BEGIN: Page Main-->
+ <div class="main-content app-content mt-0">
+ 	<div class="side-app">
 
-<div class="row">
-    <!-- Zero config table start -->
-    <div class="col-sm-12">
-        <div class="card">
-            <div class="card-header">
-            <?php 
-            $tgl = date('Y-m-d');
-            $sql = mysqli_query($koneksi,"SELECT * FROM absen WHERE id_user='$id_user' AND tanggal_absen='$tgl'");
-            $jumlah = mysqli_num_rows($sql);
-            $data = mysqli_fetch_array($sql);
-            if ($jumlah == 1) {
-            $jam_masuk = date("H:i:s", strtotime($data['jam_masuk']));
-            $waktu_pulang_unix = strtotime($jam_masuk) + 8 * 3600; // Menambah 8 jam dalam detik
-            $jam_pulang = date("H:i:s", $waktu_pulang_unix);
-            ?>
-                <?php if ($jam_pulang <= date("H:i:s")): ?>
-                    <?php if ($data['long_pulang'] == NULL): ?>
-                        <div id="pulang">
-                        </div>                                                       
-                    <?php endif ?>
-                <?php endif ?>
-            <?php
-            }else{
-            ?>
-            <div id="masuk">
-            </div>
-            <?php } ?>
-            </div>
-            <div class="card-body">
-                <div class="dt-responsive table-responsive">
-                    <table id="simpletable" class="table table-striped table-bordered nowrap">
+ 		<!-- CONTAINER -->
+ 		<div class="main-container container-fluid">
+
+ 			<!-- PAGE-HEADER -->
+ 			<div class="page-header">
+ 				<h1 class="page-title"></h1>
+ 				<div>
+ 					<ol class="breadcrumb">
+ 						<li class="breadcrumb-item"><a href="index.php">Home</a></li>
+ 						<li class="breadcrumb-item active" aria-current="page"><a href="index.php?page=<?=$folder;?>"><?=$judul;?></a></li>
+ 					</ol>
+ 				</div>
+
+ 			</div>
+ 			<!-- PAGE-HEADER END -->
+
+ 			<!-- Row -->
+ 			<div class="row row-sm">
+ 				<div class="col-lg-12">
+ 					<div class="card">
+ 						<div class="card-header">
+ 							<h3 class="card-title"><?=$folder;?></h3>
+ 						</div>
+ 						<div class="card-body">
+ 							<div class="table-responsive">
+ 								<table class="table table-bordered text-nowrap border-bottom" id="responsive-datatable">
  									<thead>
  										<tr>
  											<th>No</th>
 
-    <th>Karyawan</th>
+    <th>Pegawai</th>
 
     <th>Tanggal Absen</th>
 
@@ -69,10 +66,10 @@ max-width: 200px;
 <tbody>
 <?php 
 $no = 1;
-if ($level == "Karyawan") {
+if ($akses == "Pegawai") {
   $sql = mysqli_query($koneksi,"SELECT * FROM absen
   JOIN user USING(id_user)
-  WHERE id_user='$id_user'");  
+  WHERE id_user='$id_pengguna'");  
 } else {
   $sql = mysqli_query($koneksi,"SELECT * FROM absen
   JOIN user USING(id_user)
@@ -85,7 +82,7 @@ $id = $data['id_absen'];
 <tr>
 <td><?=$no++;?></td>
 
-<td><?=$data['nama_user'];?></td>
+<td><?=$data['nama_pengguna'];?></td>
 
 <td><?=tgl($data['tanggal_absen']);?></td>
 
@@ -150,11 +147,17 @@ new mapboxgl.Marker(el)
 </tr>
 <?php } ?>
 </tbody>
-          </table>
-                </div>
-            </div>
-        </div>
-    </div>
-        <!-- Zero config table end -->
+</table>
 </div>
+</div>
+</div>
+</div>
+</div>
+<!-- End Row -->
 
+</div>
+<!-- CONTAINER CLOSED -->
+
+</div>
+</div>
+<!-- END: Page Main-->

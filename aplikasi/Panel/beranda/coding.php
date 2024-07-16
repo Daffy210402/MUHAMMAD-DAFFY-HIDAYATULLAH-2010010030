@@ -1,21 +1,30 @@
 <?php 
 
-$user         	= mysqli_query($koneksi,"SELECT * FROM user");
-$jumlah_user  	= mysqli_num_rows($user);
+$absen         	= mysqli_query($koneksi,"SELECT * FROM absen");
+$jumlah_absen  	= mysqli_num_rows($absen);
 
-$pendaftaran1         	= mysqli_query($koneksi,"SELECT * FROM cuti");
-$jumlah_pendaftaran1  	= mysqli_num_rows($pendaftaran1);
+$cuti         	= mysqli_query($koneksi,"SELECT * FROM cuti");
+$jumlah_cuti  	= mysqli_num_rows($cuti);
 
-$pendaftaran         	= mysqli_query($koneksi,"SELECT * FROM perjalanandinas");
-$jumlah_pendaftaran  	= mysqli_num_rows($pendaftaran);
+$mutasi         	= mysqli_query($koneksi,"SELECT * FROM mutasi");
+$jumlah_mutasi  	= mysqli_num_rows($mutasi);
 
-$query = "SELECT * FROM user WHERE id_user='$id_user'";
-$result = mysqli_query($koneksi, $query);
-$ros = mysqli_fetch_array($result);
-$usia = hitungUsia($ros['tanggal_lahir']);
+$skp         	= mysqli_query($koneksi,"SELECT * FROM skp");
+$jumlah_skp  	= mysqli_num_rows($skp);
 
-$qry = "SELECT * FROM pelatihan WHERE id_user='$id_user'";
-$hasil = mysqli_query($koneksi, $qry);
-$jumla = mysqli_num_rows($hasil);
-$rosa = mysqli_fetch_array($hasil);
+$sppd         	= mysqli_query($koneksi,"SELECT * FROM sppd");
+$jumlah_sppd  	= mysqli_num_rows($sppd);
+
+$spt         	= mysqli_query($koneksi,"SELECT * FROM spt");
+$jumlah_spt  	= mysqli_num_rows($spt);
+
+$naik_gaji         	= mysqli_query($koneksi,"SELECT * FROM naik_gaji");
+$jumlah_naik_gaji  	= mysqli_num_rows($naik_gaji);
+
+$naik_pangkat         	= mysqli_query($koneksi,"SELECT * FROM naik_pangkat");
+$jumlah_naik_pangkat  	= mysqli_num_rows($naik_pangkat);
+
+$pensiun         	= mysqli_query($koneksi,"SELECT * FROM pensiun");
+$jumlah_pensiun  	= mysqli_num_rows($pensiun);
+
  ?>

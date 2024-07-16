@@ -1,52 +1,64 @@
-<div class="row">
-    <!-- Zero config table start -->
-    <div class="col-sm-12">
-        <div class="card">
-            <div class="card-header">
-				<form method="POST" action="../laporan/absen.php" target="_blank">
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <input class="form-control" placeholder="Dari Tanggal" type="date"  name="dari" required>
-                        </div>
-                        <div class="col-sm-4">
-                            <input class="form-control" placeholder="Sampai Tanggal" type="date"  name="sampai" required>
-                        </div>
-                        <div class="col-sm-3">
-                            <select name="id_user" class="form-control select2-show-search form-select" required>
-                                <option value=>-- Pilih Karyawan --</option>
-                                <option value="All">Semua</option>
-                                <?php
-                                    $row = mysqli_query($koneksi,"SELECT * FROM user WHERE level='Karyawan'");
-                                    while ($rows = mysqli_fetch_array($row)) {	
-                                        if ($data['id_user'] == $rows['id_user']) {
-                                    ?>
-                                    <option value="<?=$rows['id_user'];?>" selected><?=$rows['nama_user'];?></option>		
-                                    <?php
-                                    }else{
-                                    ?>
-                                    <option value="<?=$rows['id_user'];?>"><?=$rows['nama_user'];?></option>		
-                                <?php
-                                    }
-                                    }
-                                ?>
-                            </select>
-                        </div>
-                        <div class="col-sm-1">
-                            <button style="float: right;" class="btn btn-primary btn-sm">
-                                <i class="fa fa-print"></i>
-                            </button>
-                        </div>
-                    </div>
-				</form>
-            </div>
-            <div class="card-body">
-                <div class="dt-responsive table-responsive">
-                    <table id="simpletable" class="table table-striped table-bordered nowrap">
+    <!-- leaflet js  -->
+<link href="https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css" rel="stylesheet">
+<script src="https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js"></script>
+<style>
+#marker {
+background-image: url('../assets/maps.png');
+background-size: cover;
+width: 50px;
+height: 50px;
+border-radius: 50%;
+cursor: pointer;
+}
+ 
+.mapboxgl-popup {
+max-width: 200px;
+}
+</style> 
+
+<!-- BEGIN: Page Main-->
+<div class="main-content app-content mt-0">
+	<div class="side-app">
+
+		<!-- CONTAINER -->
+		<div class="main-container container-fluid">
+
+			<!-- PAGE-HEADER -->
+			<div class="page-header">
+				<h1 class="page-title"></h1>
+				<div>
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item"><a href="index.php">Home</a></li>
+						<li class="breadcrumb-item active" aria-current="page"><a href="index.php?page=<?=$folder;?>"><?=$judul;?></a></li>
+					</ol>
+				</div>
+
+			</div>
+			<!-- PAGE-HEADER END -->
+
+			<!-- Row -->
+			<div class="row row-sm">
+				<div class="col-lg-12">
+					<div class="card">
+						<form method="POST" action="../laporan/absen.php" target="_blank">
+							<div class="card-header">
+								<h3 class="card-title"><?=$folder;?></h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<input class="form-control fc-datepicker" placeholder="Dari Tanggal" type="text"  name="dari" required>&nbsp;&nbsp;
+								<input class="form-control fc-datepicker" placeholder="Sampai Tanggal" type="text"  name="sampai" required>&nbsp;&nbsp;
+								<button style="float: right;" class="btn btn-outline-primary btn-lg">
+									<i class="fa fa-print"></i>
+								</button>
+							</div>
+						</form>
+						<div class="card-body">
+							<div class="table-responsive">
+							 								<table class="table table-bordered text-nowrap border-bottom" id="responsive-datatable">
  									<thead>
  										<tr>
  											<th>No</th>
 
-    <th>Karyawan</th>
+    <th>NIP</th>
+    <th>Pegawai</th>
 
     <th>Tanggal Absen</th>
 
@@ -63,10 +75,10 @@
 <tbody>
 <?php 
 $no = 1;
-if ($akses == "Karyawan") {
+if ($akses == "Pegawai") {
   $sql = mysqli_query($koneksi,"SELECT * FROM absen
   JOIN user USING(id_user)
-  WHERE id_user='$id_user'");  
+  WHERE id_user='$id_pengguna'");  
 } else {
   $sql = mysqli_query($koneksi,"SELECT * FROM absen
   JOIN user USING(id_user)
@@ -78,37 +90,84 @@ $id = $data['id_absen'];
 <tr>
 <td><?=$no++;?></td>
 
-<td><?=$data['nama_user'];?></td>
+<td><?=$data['nip'];?></td>
+<td><?=$data['nama_pengguna'];?></td>
 
 <td><?=tgl($data['tanggal_absen']);?></td>
 
 <td><?=$data['jam_masuk'];?></td>
 
-<td><a href="https://www.google.com/maps?q=<?=$data['lang_masuk'];?>,<?=$data['long_masuk'];?>" target="_BLANK" class="btn btn-primary">Klik Lokasi Maps</a></td>
+<td><div id="masuk<?=$id;?>" style="width: 300px; height: 150px;"></div></td>
 
 <td><?=$data['jam_pulang'];?></td>
 
-<td>
-    <?php
-    if ($data['long_pulang'] == NULL) {
-        # code...
-    } else {
-        ?><a href="https://www.google.com/maps?q=<?=$data['lang_pulang'];?>,<?=$data['long_pulang'];?>" target="_BLANK" class="btn btn-primary">Klik Lokasi Maps</a>
+<td><div id="pulang<?=$id;?>" style="width: 300px; height: 150px;"></div></td>
+<script>
+  mapboxgl.accessToken = 'pk.eyJ1IjoiaGF6emFtYSIsImEiOiJja3J3ZjYyeHgwZzBkMm9uMXM0aXhtM2gyIn0.65vBDTYiC2sG95UCvd2-gw';
+var monument = [<?=$data['long_masuk'];?>, <?=$data['lang_masuk'];?>];
+var map = new mapboxgl.Map({
+container: 'masuk<?=$id;?>',
+style: 'mapbox://styles/mapbox/light-v10',
+center: monument,
+zoom: 15
+});
+ 
+// create the popup
+var popup = new mapboxgl.Popup({ offset: 25 }).setText(
+'Lokasi'
+);
+ 
+// create DOM element for the marker
+var el = document.createElement('div');
+el.id = 'marker';
+ 
+// create the marker
+new mapboxgl.Marker(el)
+.setLngLat(monument)
+.setPopup(popup) // sets a popup on this marker
+.addTo(map);
+</script>
 
-        <?php
-    }
-    
-    ?>
-</td>
-
+<script>
+  mapboxgl.accessToken = 'pk.eyJ1IjoiaGF6emFtYSIsImEiOiJja3J3ZjYyeHgwZzBkMm9uMXM0aXhtM2gyIn0.65vBDTYiC2sG95UCvd2-gw';
+var monument = [<?=$data['long_pulang'];?>, <?=$data['lang_pulang'];?>];
+var map = new mapboxgl.Map({
+container: 'pulang<?=$id;?>',
+style: 'mapbox://styles/mapbox/light-v10',
+center: monument,
+zoom: 15
+});
+ 
+// create the popup
+var popup = new mapboxgl.Popup({ offset: 25 }).setText(
+'Lokasi'
+);
+ 
+// create DOM element for the marker
+var el = document.createElement('div');
+el.id = 'marker';
+ 
+// create the marker
+new mapboxgl.Marker(el)
+.setLngLat(monument)
+.setPopup(popup) // sets a popup on this marker
+.addTo(map);
+</script>
 </tr>
 <?php } ?>
 </tbody>
-					</table>
-                </div>
-            </div>
-        </div>
-    </div>
-        <!-- Zero config table end -->
+</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- End Row -->
+
+		</div>
+		<!-- CONTAINER CLOSED -->
+
+	</div>
 </div>
+<!-- END: Page Main-->
 

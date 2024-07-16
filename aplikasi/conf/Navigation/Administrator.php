@@ -1,34 +1,75 @@
-    <nav class="pcoded-navbar menu-light ">
-        <div class="navbar-wrapper  ">
-            <div class="navbar-content scroll-div " >
-                <ul class="nav pcoded-inner-navbar ">
-                    <li class="nav-item"><a href="index.php" class="nav-link "><span class="pcoded-micon"><i class="feather icon-home"></i></span><span class="pcoded-mtext">Beranda</span></a></li>
-                    <li class="nav-item pcoded-hasmenu">
-                        <a href="#!" class="nav-link "><span class="pcoded-micon"><i class="feather icon-folder"></i></span><span class="pcoded-mtext">Data Master</span></a>
-                        <ul class="pcoded-submenu">
-                            <li><a href="index.php?page=Golongan">Golongan</a></li>
-                            <li><a href="index.php?page=Karyawan">Karyawan</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item pcoded-hasmenu">
-                        <a href="#!" class="nav-link "><span class="pcoded-micon"><i class="feather icon-airplay"></i></span><span class="pcoded-mtext">Data Transaksi</span></a>
-                        <ul class="pcoded-submenu">
-                            <li><a href="index.php?page=SPT">SPT</a></li>
-                            <li><a href="index.php?page=Kegiatan">Kegiatan</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item pcoded-hasmenu">
-                        <a href="#!" class="nav-link "><span class="pcoded-micon"><i class="feather icon-filter"></i></span><span class="pcoded-mtext">Data Laporan</span></a>
-                        <ul class="pcoded-submenu">
-                            <li><a href="index.php?page=Absen&form=Cetak">Absen</a></li>
-                            <li><a href="index.php?page=SPT&form=Cetak">SPT</a></li>
-                            <li><a href="index.php?page=Cuti&form=Cetak">Cuti</a></li>
-                            <li><a href="index.php?page=Perjalanan Dinas&form=Cetak">Perjalanan Dinas</a></li>
-                            <li><a href="index.php?page=Kegiatan&form=Cetak">Kegiatan</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item"><a href="index.php?page=Setting" class="nav-link "><span class="pcoded-micon"><i class="fas fa-wrench"></i></span><span class="pcoded-mtext">Pengaturan</span></a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+            <div class="sticky">
+                <div class="app-sidebar__overlay" data-bs-toggle="sidebar">
+                </div>
+                <div class="app-sidebar">
+                    <div class="side-header">
+                        <div class="header-brand1">
+                            <img src="../modul/internal/logo.png" alt="logo" width="30px"> <br>
+                            <h6 style="color: white; font-weight: bold;"><?=$apk;?></h6>
+                        </div>
+                    </div>
+                    <div class="main-sidemenu">
+                        <ul class="side-menu">
+                            <li class="sub-category">
+                                <h3>Main</h3>
+                            </li>
+                            <li class="slide">
+                                <a class="side-menu__item has-link" data-bs-toggle="slide" href="index.php">
+                                    <i class="side-menu__icon fe fe-home"></i>
+                                    <span class="side-menu__label">Dashboard</span>
+                                </a>
+                                </li>
+                                <li class="slide">
+                                    <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0)">
+                                        <i class="side-menu__icon fe fe-slack"></i>
+                                        <span class="side-menu__label">Master Data</span>
+                                        <i class="angle fe fe-chevron-right"></i>
+                                    </a>
+                                    <ul class="slide-menu">
+                                        <!--<li><a href="index.php?page=Pejabat Atasan Penilai" class="slide-item"> Pejabat Atasan Penilai</a></li>
+                                        <li><a href="index.php?page=Pejabat Penilai" class="slide-item"> Pejabat Penilai</a></li>-->
+                                        <li><a href="index.php?page=Unit Kerja" class="slide-item"> Unit Kerja</a></li>
+                                        <li><a href="index.php?page=Jabatan" class="slide-item"> Jabatan</a></li>
+                                        <li><a href="index.php?page=Pangkat" class="slide-item"> Pangkat</a></li>
+                                        <li><a href="index.php?page=Pegawai" class="slide-item"> Pegawai</a></li>
+                                    </ul>
+                                </li>
+                                <li class="slide">
+                                    <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0)">
+                                        <i class="side-menu__icon fe fe-slack"></i>
+                                        <span class="side-menu__label">Transaksi Data</span>
+                                        <i class="angle fe fe-chevron-right"></i>
+                                    </a>
+                                    <ul class="slide-menu">
+                                        <li><a href="index.php?page=SPT" class="slide-item"> SPT</a></li>
+                                        <li><a href="index.php?page=SPPD" class="slide-item"> SPPD</a></li>
+                                        <li><a href="index.php?page=Cuti" class="slide-item"> Cuti</a></li>
+                                        <li><a href="index.php?page=Kenaikan Pangkat" class="slide-item"> Kenaikan Pangkat</a></li>
+                                        <li><a href="index.php?page=Kenaikan Gaji" class="slide-item"> Kenaikan Gaji</a></li>
+                                        <li><a href="index.php?page=Pensiun" class="slide-item"> Pensiun</a></li>
+                                        <li><a href="index.php?page=Sasaran Kinerja Pegawai" class="slide-item"> Sasaran Kinerja Pegawai</a></li>
+                                        <li><a href="index.php?page=Mutasi" class="slide-item"> Mutasi</a></li>
+                                    </ul>
+                                </li>
+                                <li class="slide">
+                                    <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0)">
+                                        <i class="side-menu__icon fe fe-slack"></i>
+                                        <span class="side-menu__label">Report Data</span>
+                                        <i class="angle fe fe-chevron-right"></i>
+                                    </a>
+                                    <ul class="slide-menu">
+                                        <li><a href="index.php?page=Absen&form=Cetak" class="slide-item"> Absen</a></li>
+                                        <li><a href="index.php?page=SPT&form=Cetak" class="slide-item"> SPT</a></li>
+                                        <li><a href="index.php?page=SPPD&form=Cetak" class="slide-item"> SPPD</a></li>
+                                        <li><a href="index.php?page=Cuti&form=Cetak" class="slide-item"> Cuti</a></li>
+                                        <li><a href="index.php?page=Kenaikan Pangkat&form=Cetak" class="slide-item"> Kenaikan Pangkat</a></li>
+                                        <li><a href="index.php?page=Kenaikan Gaji&form=Cetak" class="slide-item"> Kenaikan Gaji</a></li>
+                                        <li><a href="index.php?page=Pensiun&form=Cetak" class="slide-item"> Pensiun</a></li>
+                                        <li><a href="index.php?page=Sasaran Kinerja Pegawai&form=Cetak" class="slide-item"> Sasaran Kinerja Pegawai</a></li>
+                                        <li><a href="index.php?page=Mutasi&form=Cetak" class="slide-item"> Mutasi</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>

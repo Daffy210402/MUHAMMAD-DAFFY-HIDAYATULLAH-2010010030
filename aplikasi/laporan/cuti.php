@@ -8,15 +8,20 @@ $html .= "
 <thead>
 <tr>	
 <th>No</th>
-    <th>Karyawan</th>
+    <th>NIP</th>
+    <th>Pegawai</th>
 
-    <th>Jenis Cuti</th>
+    <th>Tanggal Pengajuan</th>
 
-    <th>Tanggal Mulai</th>
+    <th>Dari Tanggal</th>
 
-    <th>Tanggal Selesai</th>
+    <th>Sampai Tanggal</th>
 
-    <th>Status Cuti</th>
+    <th>Tipe Cuti</th>
+
+    <th>Keterangan</th>
+
+    <th>Status</th>
 
 </tr>
 </thead>
@@ -26,7 +31,7 @@ $no = 1;
 $sql = mysqli_query($koneksi,"SELECT * FROM cuti
 
 JOIN user USING(id_user)
-WHERE tanggal_mulai_cuti BETWEEN '$dari' AND '$sampai'
+WHERE tanggal_pengajuan BETWEEN '$dari' AND '$sampai'
 
 ");
 while ($data = mysqli_fetch_array($sql)) {
@@ -34,15 +39,21 @@ $id = $data['id_cuti'];
 	$html .="<tr>
 	<td align='center'>".$no++."</td>
 
-<td align='center'>".$data['nama_user']."</td>
+<td align='center'>".$data['nip']."</td>
+<td align='center'>".$data['nama_pengguna']."</td>
 
-<td align='center'>".$data['jenis_cuti']."</td>
+<td align='center'>".tgl($data['tanggal_pengajuan'])."</td>
 
-<td align='center'>".tgl($data['tanggal_mulai_cuti'])."</td>
+<td align='center'>".tgl($data['dari_tanggal'])."</td>
 
-<td align='center'>".tgl($data['tanggal_selesai_cuti'])."</td>
+<td align='center'>".tgl($data['sampai_tanggal'])."</td>
+
+<td align='center'>".$data['tipe_cuti']."</td>
+
+<td align='center'>".$data['keterangan_cuti']."</td>
 
 <td align='center'>".$data['status_cuti']."</td>
+	</tr>
 
 ";
 } 

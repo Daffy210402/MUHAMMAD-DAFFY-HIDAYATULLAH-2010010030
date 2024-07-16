@@ -1,95 +1,226 @@
+    <?php 
+    include 'coding.php';
+    ?>
 
 
-   <div class="row">
-            <!-- subscribe start -->
-            <div class="col-md-6 col-lg-4">
-                <div class="card">
-                    <div class="card-body text-center">
-                        <i class="feather icon-users text-c-green d-block f-40"></i>
-                        <h4 class="m-t-20"><span class="text-c-green"><?=$jumlah_user;?></span> Pengguna</h4>
-                        <p class="m-b-20">Jumlah Pengguna saat ini</p>
+    <!--app-content open-->
+    <div class="main-content app-content mt-0">
+        <div class="side-app">
+
+            <!-- CONTAINER -->
+            <div class="main-container container-fluid">
+
+                <!-- PAGE-HEADER -->
+                <div class="page-header">
+                    <h1 class="page-title"><?=$judul;?></h1>
+                    <div>
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="index.php">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page"><?=$judul;?></li>
+                        </ol>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-12 col-lg-4">
-                <div class="card">
-                    <div class="card-body text-center">
-                        <i class="feather icon-mail text-c-blue d-block f-40"></i>
-                        <h4 class="m-t-20"><span class="text-c-blue"><?=$jumlah_pendaftaran1;?></span> Pengajuan</h4>
-                        <p class="m-b-20">Pengajuan Cuti</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-4">
-                <div class="card">
-                    <div class="card-body text-center">
-                        <i class="feather icon-briefcase text-c-red d-block f-40"></i>
-                        <h4 class="m-t-20"><span class="text-c-blue"><?=$jumlah_pendaftaran;?></span> Pengajuan</h4>
-                        <p class="m-b-20">Semua Pengajuan Perjalanan Dinas</p>
-                    </div>
-                </div>
-            </div>
-<?php if ($level == "Karyawan"): ?>
-            <div class="col-md-12 col-lg-12">
-                <div class="card">
-                    <div class="card-body text-center">
-                        <h5>Jadwal Kegiatan Mendatang</h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-12 col-lg-12">
-                <div class="card">
-                    <div class="card-body text-center">
-                <div class="dt-responsive table-responsive">
-                    <table id="simpletable" class="table table-striped table-bordered nowrap">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Aksi</th>
-                                <th>Nama Kegiatan</th>
-                                <th>Tanggal Kegiatan</th>
-                                <th>Jam Kegiatan</th>
-                                <th>Keterangan Lain</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php 
-                            $no = 1;
-                            $current_date = date('Y-m-d');
-                            $sql = mysqli_query($koneksi,"SELECT * FROM kegiatan WHERE tanggal_kegiatan >= '$current_date'");
-                            while ($data = mysqli_fetch_array($sql)) {
-                            $id = $data['id_kegiatan'];
-                            $row = mysqli_query($koneksi,"SELECT * FROM kehadirankegiatan WHERE id_kegiatan='$id' AND id_user='$id_user'");
-                            $jumrow = mysqli_num_rows($row);                            
-                            ?>
-                            <tr>
-                                <td><?=$no++;?></td>
-                                <td align="center">
-                                    <?php if ($jumrow == 1): ?>
-                                        Kehadiran telah di konfirmasi. <br>
-                                        <a href="index.php?page=Daftar Kehadiran Kegiatan&form=Ubah&id_kegiatan=<?=$id;?>" class="btn btn-sm btn-warning has-ripple">
-                                            Ubah Kehadiran
-                                        </a>
-                                    <?php else: ?>
-                                        <a href="index.php?page=Daftar Kehadiran Kegiatan&form=Tambah&id_kegiatan=<?=$id;?>" class="btn btn-sm btn-success has-ripple">
-                                            Konfirmasi Kehadiran
-                                        </a>
-                                    <?php endif ?>
-                                    
-                                </td>
-                                <td><?=$data['nama_kegiatan'];?></td>
-                                <td><?=tgl($data['tanggal_kegiatan']);?></td>
-                                <td><?=$data['jam_kegiatan'];?></td>
-                                <td><?=$data['keterangan_kegiatan'];?></td>
-                            </tr>
-                            <?php } ?>
-                        </tbody>
-                    </table>
-                </div>                        
-                    </div>
-                </div>
-            </div>    
-<?php endif ?>
-        
-        
-            <!-- subscribe end -->
+                <!-- PAGE-HEADER END -->
+
+                <!-- ROW-1 -->
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xl-12">
+                                                    <?php 
+                            if ($akses == "Pegawai") {
+                                ?>
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xl-12">
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xl-12">
+                                                <div class="card overflow-hidden">
+                                                    <div class="card-body">
+                                                        <center><h3>Absen Harian</h3></center>
+                                                        <?php 
+                                                        $tgl = date('Y-m-d');
+                                                        $sql = mysqli_query($koneksi,"SELECT * FROM absen WHERE id_user='$id_pengguna' AND tanggal_absen='$tgl'");
+                                                        $jumlah = mysqli_num_rows($sql);
+                                                        $data = mysqli_fetch_array($sql);
+                                                        if ($jumlah == 1) {
+                                                         ?>
+                                                         <div id="masukubah">
+                                                         </div>
+                                                         <?php 
+                                                     }else{
+                                                       ?>
+                                                       <div id="masuk">
+                                                       </div>
+                                                   <?php } ?>
+                                                   <?php if ($data['long_pulang'] == NULL): ?>
+                                                   <div id="pulang">
+                                                   </div>                                                       
+                                                   <?php else: ?>
+                                                   <div id="pulangubah">
+                                                   </div>
+                                                   <?php endif ?>
+                                               </div>
+                                           </div>
+                                       </div>
+                                   </div>                    
+                               </div>
+                           </div>
+                       <?php }else{ ?>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xl-3">
+                                <div class="card overflow-hidden">
+                                    <div class="card-body">
+                                        <div class="d-flex">
+                                            <div class="mt-2">
+                                                <h6 class="">Total Absen</h6>
+                                                <h2 class="mb-0 number-font"><?=$jumlah_absen;?></h2>
+                                            </div>
+                                            <div class="ms-auto">
+                                                <div class="chart-wrapper mt-1">
+                                                    <canvas id="saleschart"
+                                                    class="h-8 w-9 chart-dropshadow"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xl-3">
+                                <div class="card overflow-hidden">
+                                    <div class="card-body">
+                                        <div class="d-flex">
+                                            <div class="mt-2">
+                                                <h6 class="">Total Cuti</h6>
+                                                <h2 class="mb-0 number-font"><?=$jumlah_cuti;?></h2>
+                                            </div>
+                                            <div class="ms-auto">
+                                                <div class="chart-wrapper mt-1">
+                                                    <canvas id="saleschart"
+                                                    class="h-8 w-9 chart-dropshadow"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xl-3">
+                                <div class="card overflow-hidden">
+                                    <div class="card-body">
+                                        <div class="d-flex">
+                                            <div class="mt-2">
+                                                <h6 class="">Total Kenaikan Pangkat</h6>
+                                                <h2 class="mb-0 number-font"><?=$jumlah_naik_pangkat;?></h2>
+                                            </div>
+                                            <div class="ms-auto">
+                                                <div class="chart-wrapper mt-1">
+                                                    <canvas id="leadschart"
+                                                    class="h-8 w-9 chart-dropshadow"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xl-3">
+                                <div class="card overflow-hidden">
+                                    <div class="card-body">
+                                        <div class="d-flex">
+                                            <div class="mt-2">
+                                                <h6 class="">Total Kenaikan Gaji</h6>
+                                                <h2 class="mb-0 number-font"><?=$jumlah_naik_gaji;?></h2>
+                                            </div>
+                                            <div class="ms-auto">
+                                                <div class="chart-wrapper mt-1">
+                                                    <canvas id="profitchart"
+                                                    class="h-8 w-9 chart-dropshadow"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xl-3">
+                                <div class="card overflow-hidden">
+                                    <div class="card-body">
+                                        <div class="d-flex">
+                                            <div class="mt-2">
+                                                <h6 class="">Total Pensiun</h6>
+                                                <h2 class="mb-0 number-font"><?=$jumlah_pensiun;?></h2>
+                                            </div>
+                                            <div class="ms-auto">
+                                                <div class="chart-wrapper mt-1">
+                                                    <canvas id="costchart"
+                                                    class="h-8 w-9 chart-dropshadow"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xl-3">
+                                <div class="card overflow-hidden">
+                                    <div class="card-body">
+                                        <div class="d-flex">
+                                            <div class="mt-2">
+                                                <h6 class="">Total Mutasi</h6>
+                                                <h2 class="mb-0 number-font"><?=$jumlah_mutasi;?></h2>
+                                            </div>
+                                            <div class="ms-auto">
+                                                <div class="chart-wrapper mt-1">
+                                                    <canvas id="costchart"
+                                                    class="h-8 w-9 chart-dropshadow"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xl-3">
+                                <div class="card overflow-hidden">
+                                    <div class="card-body">
+                                        <div class="d-flex">
+                                            <div class="mt-2">
+                                                <h6 class="">Total SPPD</h6>
+                                                <h2 class="mb-0 number-font"><?=$jumlah_sppd;?></h2>
+                                            </div>
+                                            <div class="ms-auto">
+                                                <div class="chart-wrapper mt-1">
+                                                    <canvas id="costchart"
+                                                    class="h-8 w-9 chart-dropshadow"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xl-3">
+                                <div class="card overflow-hidden">
+                                    <div class="card-body">
+                                        <div class="d-flex">
+                                            <div class="mt-2">
+                                                <h6 class="">Total SPT</h6>
+                                                <h2 class="mb-0 number-font"><?=$jumlah_spt;?></h2>
+                                            </div>
+                                            <div class="ms-auto">
+                                                <div class="chart-wrapper mt-1">
+                                                    <canvas id="costchart"
+                                                    class="h-8 w-9 chart-dropshadow"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- ROW-1 -->
+
+                           <?php
+                       }
+                       ?>
+                       <!-- ROW-1 END -->
+                   </div>
+               </div>
+           </div>
+           <!-- ROW-1 END -->
+       </div>
+       <!-- CONTAINER END -->
+   </div>
+</div>
+            <!--app-content close-->

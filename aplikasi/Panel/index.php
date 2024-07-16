@@ -22,13 +22,6 @@ if (isset($_GET['page'])) {
 		<button style='float: right;' class='btn btn-primary' name='ubah'>Ubah</button>";		
 		include $folder.'/form.php';
 
-	}else if ($_GET['form'] == "Ubah2") {
-		$id = $_GET['id'];
-		$button = "
-		<input type='hidden' name='id' value='".$id."'>
-		<button style='float: right;' class='btn btn-primary' name='ubah2'>Kirim</button>";		
-		include $folder.'/ubah.php';
-
 	}else if ($_GET['form'] == "Hapus") {
 		$id = $_GET['id'];
 		include $folder.'/hapus.php';	
@@ -44,7 +37,7 @@ if (isset($_GET['page'])) {
 		include $folder.'/cetak4.php';
 	}else if ($_GET['form'] == "Cetak5") {
 		include $folder.'/cetak5.php';
-	}else if ($_GET['form'] == "Detail") {
+	}else if ($_GET['form'] == "detail") {
 		include $folder.'/detail.php';	
 	}else if ($_GET['form'] == "Verifikasi") {
 		include $folder.'/index2.php';	

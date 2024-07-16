@@ -1,64 +1,126 @@
 
- <?php 
- if ($_GET['form'] == "Ubah") {
-    $sql    = mysqli_query($koneksi,"SELECT * FROM spt WHERE id_spt='$id'");
-    $data   = mysqli_fetch_array($sql);
+<?php 
+if ($_GET['form'] == "Ubah") {
+	$sql    = mysqli_query($koneksi,"SELECT * FROM spt WHERE id_spt='$id'");
+	$data   = mysqli_fetch_array($sql);
+}else{
+
 }
 ?>
-<div class="row">
-    <!-- [ Select2 ] start -->
-    <div class="col-sm-12">
-        <div class="card select-card">
-            <div class="card-body">
-                <form method="post" action="<?=$folder;?>/proses.php" enctype="multipart/form-data">
-                    <div class="row">
-						<div class="col-lg-12">
-							<div class="form-group">
-								<label>Tanggal</label>
-								<input class="form-control" type="date"  name="tanggal_spt"  value="<?=date("Y-m-d", strtotime($data['tanggal_spt']));?>" required>
-							</div>
-						</div>
-						<?php if ($level == "Administrator"): ?>
-	<div class="col-lg-12">
-	<div class="form-group">
-	<label class="form-label">Karyawan</label>
-	        <select name="id_user" class="js-example-basic-single form-control" id="id_user" required>
-			<option value>-- Pilih Karyawan --</option>
-			<?php
-				$row = mysqli_query($koneksi,"SELECT * FROM user WHERE level='Karyawan'");
-                while ($rows = mysqli_fetch_array($row)) {	
-                	 if ($data['id_user'] == $rows['id_user']) {
-				?>
-				<option value="<?=$rows['id_user'];?>" selected><?=$rows['nama_user'];?></option>		
-				<?php
-				}else{
-				?>
-				<option value="<?=$rows['id_user'];?>"><?=$rows['nama_user'];?></option>		
-			<?php
-				}
-				}
-			?>
-			</select>
+<!-- BEGIN: Page Main-->
+<div class="main-content app-content mt-0">
+	<div class="side-app">
+
+		<!-- CONTAINER -->
+		<div class="main-container container-fluid">
+
+			<!-- PAGE-HEADER -->
+			<div class="page-header">
+				<h1 class="page-title"></h1>
+				<div>
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item"><a href="index.php">Home</a></li>
+						<li class="breadcrumb-item active" aria-current="page"><a href="index.php?page=<?=$folder;?>"><?=$judul;?></a></li>
+					</ol>
+				</div>
+
 			</div>
-			</div>
-										
-						<?php else: ?>
-							<input type="hidden" name="id_user" value="<?=$id_user;?>">
-						<?php endif ?>
-						<div class="col-lg-12">
-							<div class="form-group">
-								<label>Perihal</label>
-                                <input class="form-control" type="text"  name="bukti_spt"  value="<?=$data['bukti_spt'];?>" required>								
-							</div>
-						</div>           
-						<div class="col-xl-12">
-						<?=$button;?>
-						<button type="reset" class="btn btn-danger">Reset</button>
+			<!-- PAGE-HEADER END -->
+
+			<!-- Row -->
+			<div class="row">
+				<div class="col-xl-12 col-md-12">
+					<form method="post" class="card" action="<?=$folder;?>/proses.php" enctype="multipart/form-data">
+						<div class="card-header">
+							<h3 class="card-title"><?=$judul;?></h3>
 						</div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <!-- [ Select2 ] end -->
+						<div class=" card-body">
+							
+<?php if ($akses == "Pegawai"): ?>
+		<input type="hidden" name="id_user" value="<?=$id_pengguna;?>">
+		<?php else: ?>
+			<div class="col-lg-12">
+				<div class="form-group">
+					<label class="form-label">Pegawai</label>
+					<select name="id_user" class="form-control select2-show-search form-select" id="id_user" required>
+						<option value>-- Pilih Pegawai --</option>
+						<?php
+						$row = mysqli_query($koneksi,"SELECT * FROM user WHERE akses='Pegawai'");
+						while ($rows = mysqli_fetch_array($row)) {	
+							if ($data['id_user'] == $rows['id_user']) {
+								?>
+								<option value="<?=$rows['id_user'];?>" selected><?=$rows['nip'];?>|<?=$rows['nama_pengguna'];?></option>		
+								<?php
+							}else{
+								?>
+								<option value="<?=$rows['id_user'];?>"><?=$rows['nip'];?>|<?=$rows['nama_pengguna'];?></option>		
+								<?php
+							}
+						}
+						?>
+					</select>
+				</div>
+			</div>
+		<?php endif ?>
+							
+							<div class="col-lg-12">
+								<div class="form-group">
+									<label class="form-label">Tanggal Perintah</label>
+									<input class="form-control fc-datepicker" placeholder="MM/DD/YYYY" type="text"  name="tanggal_perintah"  value="<?=date("m/d/Y", strtotime($data['tanggal_perintah']));?>" required>
+								</div>
+							</div>
+							
+							<div class="col-lg-12">
+								<div class="form-group">
+									<label class="form-label">Tujuan</label>
+									<input id="tujuan_perintah" class="form-control" type="text" name="tujuan_perintah" value="<?=$data['tujuan_perintah'];?>" required>
+								</div>
+							</div>
+							
+							<div class="col-lg-12">
+								<div class="form-group">
+									<label class="form-label">Dari Tanggal</label>
+									<input class="form-control fc-datepicker" placeholder="MM/DD/YYYY" type="text"  name="dari_tanggal"  value="<?=date("m/d/Y", strtotime($data['dari_tanggal']));?>" required>
+								</div>
+							</div>
+							
+							<div class="col-lg-12">
+								<div class="form-group">
+									<label class="form-label">Sampai Tanggal</label>
+									<input class="form-control fc-datepicker" placeholder="MM/DD/YYYY" type="text"  name="sampai_tanggal"  value="<?=date("m/d/Y", strtotime($data['sampai_tanggal']));?>" required>
+								</div>
+							</div>
+							
+							<div class="col-lg-12">
+								<div class="form-group">
+									<label class="form-label">Upload Bukti</label>
+									<input type="file" id="upload" class="dropify" data-default-file="" name="upload">
+								</div>
+							</div> 	
+							<div class="col-lg-12">
+								<div class="form-group">
+									<label class="form-label">Keterangan</label>
+									<input id="keterangan_perintah" class="form-control" type="text" name="keterangan_perintah" value="<?=$data['keterangan_perintah'];?>" required>
+								</div>
+							</div>
+							
+
+							<div class="col-lg-12">
+								<div class="form-group">
+									<?=$button;?>
+									<button type="reset" class="btn btn-danger">Reset</button>
+								</div>
+							</div>           
+						</div>
+					</form>
+				</div>    
+			</div>
+		</div>
+		<!-- End Row-->
+	</div>
+	<!-- CONTAINER CLOSED -->
+
 </div>
+</div>
+<!--app-content closed-->
+</div>               
